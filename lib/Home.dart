@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  const Home({Key? key}) : super(key: key); // Fix super.key issue
 
   @override
   Widget build(BuildContext context) {
@@ -52,21 +52,31 @@ class Home extends StatelessWidget {
               ),
             ),
             SizedBox(height: 30.0),
-            Text(
-              'YEAR',
-              style: TextStyle(
-                fontSize: 16.0,
-                color: Colors.deepPurple[500],
-                letterSpacing: 2.0,
-              ),
-            ),
-            Text(
-              '4TH',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                color: Colors.deepPurple[700],
-                fontSize: 25.0,
-              ),
+            Row(
+              children: [
+                Icon(
+                  Icons.school,
+                  color: Colors.deepPurple[400],
+                ),
+                SizedBox(width: 3.0),
+                Text(
+                  'YEAR',
+                  style: TextStyle(
+                    fontSize: 16.0,
+                    color: Colors.deepPurple[500],
+                    letterSpacing: 2.0,
+                  ),
+                ),
+                SizedBox(width: 5.0), // Adjust spacing between icon and text
+                Text(
+                  '4TH',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: Colors.deepPurple[700],
+                    fontSize: 25.0,
+                  ),
+                ),
+              ],
             ),
             SizedBox(height: 30.0),
             Row(
