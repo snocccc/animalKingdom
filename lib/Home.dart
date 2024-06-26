@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Home extends StatelessWidget {
-  const Home({Key? key}) : super(key: key); // Fix super.key issue
+class Home extends StatefulWidget {
+  const Home({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  int year = 0; // Initial year
+
+  void _incrementYear() {
+    setState(() {
+      year++;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +47,7 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(width: 3.0),
                 Text(
-                  'NAME',
+                  'NAME:  ',
                   style: TextStyle(
                     fontSize: 18.0,
                     color: Colors.deepPurple[500],
@@ -60,7 +73,7 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(width: 3.0),
                 Text(
-                  'YEAR',
+                  'YEAR:  ',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.deepPurple[500],
@@ -69,7 +82,7 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(width: 5.0), // Adjust spacing between icon and text
                 Text(
-                  '4TH',
+                  '$year',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     color: Colors.deepPurple[700],
@@ -87,7 +100,7 @@ class Home extends StatelessWidget {
                 ),
                 SizedBox(width: 3.0),
                 Text(
-                  'Email',
+                  'Email: ',
                   style: TextStyle(
                     fontSize: 16.0,
                     color: Colors.deepPurple[500],
@@ -109,11 +122,9 @@ class Home extends StatelessWidget {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: () {
-                  // Add your onPressed code here!
-                },
+                onPressed: _incrementYear,
                 child: Text(
-                  'Press Me',
+                  'Add Year',
                   style: TextStyle(
                     color: Colors.white, // Set text color to white
                     fontSize: 20,
@@ -131,4 +142,10 @@ class Home extends StatelessWidget {
       ),
     );
   }
+}
+
+void main() {
+  runApp(MaterialApp(
+    home: Home(),
+  ));
 }
