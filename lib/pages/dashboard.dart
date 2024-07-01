@@ -29,6 +29,13 @@ class _DashboardState extends State<Dashboard> {
               },
               child: Text('Go To Profile'),
             ),
+            SizedBox(height: 16), // Add some spacing between the buttons
+            ElevatedButton(
+              onPressed: () {
+                Navigator.pushNamed(context, '/signup');
+              },
+              child: Text('Create Account'),
+            ),
           ],
         ),
       ),
