@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 
-class SignUp extends StatefulWidget {
-  const SignUp({super.key});
+class Login extends StatefulWidget {
+  const Login({super.key});
 
   @override
-  State<SignUp> createState() => _SignUpState();
+  State<Login> createState() => _LoginState();
 }
 
-class _SignUpState extends State<SignUp> {
+class _LoginState extends State<Login> {
   final formKey = GlobalKey<FormState>();
 
-  String name = '';
-  String password = '';
   String email = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -21,57 +20,29 @@ class _SignUpState extends State<SignUp> {
       appBar: AppBar(
         backgroundColor: Colors.deepPurple[700],
         title: const Text(
-          "Sign Up",
+          "Login",
           style: TextStyle(color: Colors.white,
-            fontSize: 24,
             fontWeight: FontWeight.bold,
+            fontSize: 24,
           ),
         ),
         centerTitle: true,
       ),
+
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.fromLTRB(16, 110, 16, 0),
         child: Form(
           key: formKey,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.start,
             children: [
               const Text(
-                "Let's Get Started",
+                "Welcome Back",
                 style: TextStyle(
                   color: Colors.deepPurple,
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
-              ),
-              const SizedBox(height: 20),
-              TextFormField(
-                decoration: const InputDecoration(
-                  labelText: 'Username',
-                  border: OutlineInputBorder(),
-                  labelStyle: TextStyle(
-                    color: Colors.deepPurple,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.person,
-                    color: Colors.deepPurple,  // Optionally, you can set the icon color
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepPurple),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderSide: BorderSide(color: Colors.deepPurple),
-                  ),
-                ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter a username';
-                  }
-                  return null;
-                  onSaved: (Value){
-                    name = value!;
-                  };
-                },
               ),
               const SizedBox(height: 20),
               TextFormField(
@@ -81,10 +52,6 @@ class _SignUpState extends State<SignUp> {
                   border: OutlineInputBorder(),
                   labelStyle: TextStyle(
                     color: Colors.deepPurple,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.email,
-                    color: Colors.deepPurple,  // Optionally, you can set the icon color
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.deepPurple),
@@ -97,30 +64,24 @@ class _SignUpState extends State<SignUp> {
                   if (value == null || value.isEmpty) {
                     return 'Please enter an email';
                   }
-                  // Simple email validation
                   final emailRegExp = RegExp(
                       r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$');
                   if (!emailRegExp.hasMatch(value)) {
                     return 'Please enter a valid email address';
                   }
                   return null;
-                  onSaved: (Value){
+                  onSaved: (value) {
                     email = value!;
                   };
                 },
               ),
               const SizedBox(height: 20),
               TextFormField(
-                maxLength: 15,
                 decoration: const InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                   labelStyle: TextStyle(
                     color: Colors.deepPurple,
-                  ),
-                  prefixIcon: Icon(
-                    Icons.lock,
-                    color: Colors.deepPurple,  // Optionally, you can set the icon color
                   ),
                   focusedBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.deepPurple),
@@ -134,11 +95,8 @@ class _SignUpState extends State<SignUp> {
                   if (value == null || value.isEmpty) {
                     return 'Please provide a password';
                   }
-                  if (value.length < 8) {
-                    return 'Password must be at least 8 characters';
-                  }
                   return null;
-                  onSaved: (Value){
+                  onSaved: (value) {
                     password = value!;
                   };
                 },
@@ -149,36 +107,74 @@ class _SignUpState extends State<SignUp> {
                 child: ElevatedButton(
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
-                      // Add your sign-up logic here
                       formKey.currentState!.save();
+                      // Add your login logic here
                     }
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.deepPurple[700],
                   ),
                   child: const Text(
-                    'Sign Up',
+                    'Login',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'or Sign-Up With',
+                style: TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.red,
+                  ),
+                  child: const Text(
+                    'Login with Google',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              const Text(
+                'OR',
+                style: TextStyle(color: Colors.black),
+              ),
+              const SizedBox(height: 20),
+              SizedBox(
+                width: double.infinity,
+                child: ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue[900],
+                  ),
+                  child: const Text(
+                    'Login with Facebook',
                     style: TextStyle(color: Colors.white),
                   ),
                 ),
               ),
               const SizedBox(height: 20),
               Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    Text(
-                      'Already Have Account? ',
-                      style: TextStyle(
-                          color: Colors.black),
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    'Dont Have An Account? ',
+                    style: TextStyle(
+                        color: Colors.black),
+                  ),
+                  InkWell(
+                    child: Text(
+                      '   Sign-Up Here!',
+                      style: TextStyle(color: Colors.deepPurple),
                     ),
-                    InkWell(
-                      child: Text(
-                        '   Login Here!',
-                        style: TextStyle(color: Colors.deepPurple),
-                      ),
-                      onTap: ()=> Navigator.pushReplacementNamed(context,'/login'),
-                    ),
-                  ]
+                      onTap: ()=> Navigator.pushReplacementNamed(context,'/signup'),
+                  ),
+                ]
               ),
             ],
           ),
@@ -190,6 +186,6 @@ class _SignUpState extends State<SignUp> {
 
 void main() {
   runApp(MaterialApp(
-    home: SignUp(),
+    home: Login(),
   ));
 }

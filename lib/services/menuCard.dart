@@ -24,7 +24,7 @@ class Menucard extends StatelessWidget {
             ),
             SizedBox(height: 10),
             Text(
-              'Quantity: ${animal.quantity}',
+              'Quantity: ${animal.Quantity}',
               style: TextStyle(
                 fontSize: 16,
                 color: Colors.deepPurple,

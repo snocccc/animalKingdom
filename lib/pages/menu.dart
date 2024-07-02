@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:untitled/services/animal.dart';
 import 'package:untitled/services/menuCard.dart';
+import 'package:http/http.dart' as http;
 
 class Menu extends StatefulWidget {
   const Menu({super.key});
@@ -9,61 +12,25 @@ class Menu extends StatefulWidget {
   State<Menu> createState() => _MenuState();
 }
 
-List<Animal> animal = [
-  Animal(animalName: "Paeng", quantity: 1),
-  Animal(animalName: "Jarllan", quantity: 1),
-  Animal(animalName: "Angelo", quantity: 1),
-  Animal(animalName: "Franze", quantity: 1),
-  Animal(animalName: "Buddy", quantity: 1),
-];
-
 class _MenuState extends State<Menu> {
-  void incrementQuantity(int index) {
-    setState(() {
-      animal[index].quantity++;
-    });
+
+  late Future<List<dynamic>> animals;
+  Future<List<dynamic>> fetchData() async{
+    final response = await http.get(Uri.parse('http://10.0.2.2:8080/Animals'));
+    final data = jsonDecode(response.body);
+    print(data);
+    List animals = <Animal>[];
+    for(var animal in data){
+      animals.add(Animal.fromJson(animal));
+    }
+    return animals;
   }
 
-  Widget cardTemplate(Animal animal, int index) {
-    return SizedBox(
-      height: 138,
-      child: Card(
-        margin: EdgeInsets.all(4),
-        child: Padding(
-          padding: const EdgeInsets.all(6.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                animal.animalName,
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.deepPurple,
-                ),
-              ),
-              SizedBox(height: 10),
-              Text(
-                'Quantity: ${animal.quantity}',
-                style: TextStyle(
-                  fontSize: 20,
-                  color: Colors.deepPurple,
-                ),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () => incrementQuantity(index),
-                    child: Text("Add Quantity"),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    animals = fetchData();
   }
 
   @override
@@ -76,25 +43,10 @@ class _MenuState extends State<Menu> {
         ),
         backgroundColor: Colors.deepPurple, // Set the color for the app bar
       ),
-      backgroundColor: Colors.deepPurple[300],
-      body: Padding(
-        padding: EdgeInsets.all(7.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: animal.asMap().entries.map((entry) {
-              int index = entry.key;
-              Animal animal = entry.value;
-              return cardTemplate(animal, index);
-            }).toList(),
-          ),
-        ),
-      ),
+
     );
   }
 }
 
-void main() {
-  runApp(MaterialApp(
-    home: Menu(),
-  ));
-}
+
+
