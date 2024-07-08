@@ -109,6 +109,9 @@ class _LoginState extends State<Login> {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
                       // Add your login logic here
+                      print('Email: $email');
+                      print('Password: $password');
+                      Navigator.pushReplacementNamed(context, '/');
                     }
                   },
                   style: ElevatedButton.styleFrom(

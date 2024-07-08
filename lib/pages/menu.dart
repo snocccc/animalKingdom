@@ -19,7 +19,7 @@ class _MenuState extends State<Menu> {
 
   // 10.0.2.2:8080
   Future<List<dynamic>> fetchData() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/products')
+    final response = await http.get(Uri.parse('http://10.0.2.2:8080/Animals')
       //Product newProduct = Products.fromJson(date);
       //   return newProduct;
       //if you want to call 1 product
@@ -88,7 +88,7 @@ class _MenuState extends State<Menu> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                animals[index].productName,
+                                animals[index].animalName,
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 16,
