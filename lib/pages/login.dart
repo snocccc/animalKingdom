@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Login extends StatefulWidget {
-  const Login({super.key});
+  const Login({Key? key}) : super(key: key);
 
   @override
   State<Login> createState() => _LoginState();
@@ -12,6 +12,7 @@ class _LoginState extends State<Login> {
 
   String email = '';
   String password = '';
+  bool isObscured = true; // Initially password is obscured
 
   @override
   Widget build(BuildContext context) {
@@ -21,14 +22,14 @@ class _LoginState extends State<Login> {
         backgroundColor: Colors.deepPurple[700],
         title: const Text(
           "Login",
-          style: TextStyle(color: Colors.white,
+          style: TextStyle(
+            color: Colors.white,
             fontWeight: FontWeight.bold,
             fontSize: 24,
           ),
         ),
         centerTitle: true,
       ),
-
       body: Padding(
         padding: const EdgeInsets.fromLTRB(16, 110, 16, 0),
         child: Form(
@@ -70,14 +71,14 @@ class _LoginState extends State<Login> {
                     return 'Please enter a valid email address';
                   }
                   return null;
-                  onSaved: (value) {
-                    email = value!;
-                  };
+                },
+                onSaved: (value) {
+                  email = value!;
                 },
               ),
               const SizedBox(height: 20),
               TextFormField(
-                decoration: const InputDecoration(
+                decoration: InputDecoration(
                   labelText: 'Password',
                   border: OutlineInputBorder(),
                   labelStyle: TextStyle(
@@ -89,16 +90,27 @@ class _LoginState extends State<Login> {
                   enabledBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.deepPurple),
                   ),
+                  suffixIcon: IconButton(
+                    icon: Icon(
+                      isObscured ? Icons.visibility : Icons.visibility_off,
+                      color: Colors.deepPurple,
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        isObscured = !isObscured;
+                      });
+                    },
+                  ),
                 ),
-                obscureText: true,
+                obscureText: isObscured,
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please provide a password';
                   }
                   return null;
-                  onSaved: (value) {
-                    password = value!;
-                  };
+                },
+                onSaved: (value) {
+                  password = value!;
                 },
               ),
               const SizedBox(height: 20),
@@ -134,11 +146,11 @@ class _LoginState extends State<Login> {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.red,
+                    backgroundColor: Colors.white,
                   ),
                   child: const Text(
                     'Login with Google',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.red),
                   ),
                 ),
               ),
@@ -153,11 +165,11 @@ class _LoginState extends State<Login> {
                 child: ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue[900],
+                    backgroundColor: Colors.white,
                   ),
                   child: const Text(
                     'Login with Facebook',
-                    style: TextStyle(color: Colors.white),
+                    style: TextStyle(color: Colors.blue),
                   ),
                 ),
               ),
@@ -167,17 +179,17 @@ class _LoginState extends State<Login> {
                 children: <Widget>[
                   Text(
                     'Dont Have An Account? ',
-                    style: TextStyle(
-                        color: Colors.black),
+                    style: TextStyle(color: Colors.black),
                   ),
                   InkWell(
                     child: Text(
                       '   Sign-Up Here!',
                       style: TextStyle(color: Colors.deepPurple),
                     ),
-                      onTap: ()=> Navigator.pushReplacementNamed(context,'/signup'),
+                    onTap: () =>
+                        Navigator.pushReplacementNamed(context, '/signup'),
                   ),
-                ]
+                ],
               ),
             ],
           ),

@@ -42,9 +42,9 @@ class _MenuState extends State<Menu> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.teal[400],
+      backgroundColor: Colors.deepPurple[200],
       appBar: AppBar(
-        backgroundColor: Colors.lightBlue[900],
+        backgroundColor: Colors.deepPurple[700],
         foregroundColor: Colors.white,
         title: Text(
           'Menu',
@@ -81,7 +81,7 @@ class _MenuState extends State<Menu> {
                       width: double.infinity, // Card takes full width of the ListView
                       margin: EdgeInsets.symmetric(vertical: 5.0, horizontal: 10.0),
                       child: Card(
-                        color: Colors.lightBlue[900],
+                        color: Colors.deepPurple[300],
                         child: ListTile(
                           title: Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
