@@ -1,4 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:untitled/services/User.dart';
 
 class Login extends StatefulWidget {
   const Login({Key? key}) : super(key: key);
@@ -14,9 +18,128 @@ class _LoginState extends State<Login> {
   String password = '';
   bool isObscured = true; // Initially password is obscured
 
+  login(User user) async {
+    try {
+      final response = await http.post(
+        Uri.parse('http://10.0.2.2:8080/api/v1/auth/login'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        },
+        body: jsonEncode(<String, dynamic>{
+          'usernameorEmail': user.Email,
+          'password': user.Password
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        // Login successful, navigate to next page or perform actions
+        print('Login successful');
+        Navigator.pushReplacementNamed(context, '/');
+      } else if (response.statusCode == 401) {
+        // Unauthorized - incorrect credentials
+        showSnackbar('Invalid email or password');
+      } else {
+        // Other error handling, e.g., network issues
+        showSnackbar('Error occurred: ${response.reasonPhrase}');
+      }
+    } catch (e) {
+      // Handle network and other errors
+      print('Error during login: $e');
+      showSnackbar('Error: $e');
+    }
+  }
+
+  void showSnackbar(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
+          backgroundColor: Colors.transparent,
+          child: Stack(
+            children: <Widget>[
+              Container(
+                padding: EdgeInsets.all(20.0),
+                margin: EdgeInsets.only(top: 20.0),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.deepPurple[100],
+                  borderRadius: BorderRadius.circular(10.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 10.0,
+                      offset: const Offset(0.0, 10.0),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      'Error',
+                      style: TextStyle(
+                        color: Colors.deepPurple,
+                        fontSize: 24.0,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      message,
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                        fontFamily: 'Roboto', // Custom font family
+                      ),
+                    ),
+                    SizedBox(height: 24.0),
+                    ElevatedButton(
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.deepPurple,
+                        foregroundColor: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal: 24.0),
+                      ),
+                      child: Text(
+                        'OK',
+                        style: TextStyle(fontSize: 18.0),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              Positioned(
+                top: 0,
+                left: 16,
+                right: 16,
+                child: CircleAvatar(
+                  backgroundColor: Colors.deepPurple,
+                  radius: 20,
+                  child: Icon(
+                    Icons.error,
+                    color: Colors.white,
+                    size: 30,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       backgroundColor: Colors.deepPurple[100],
       appBar: AppBar(
         backgroundColor: Colors.deepPurple[700],
@@ -120,10 +243,12 @@ class _LoginState extends State<Login> {
                   onPressed: () {
                     if (formKey.currentState!.validate()) {
                       formKey.currentState!.save();
-                      // Add your login logic here
-                      print('Email: $email');
-                      print('Password: $password');
-                      Navigator.pushReplacementNamed(context, '/');
+                      User user = User(
+                        Username: '',
+                        Email: email,
+                        Password: password,
+                      );
+                      login(user); // Call login method
                     }
                   },
                   style: ElevatedButton.styleFrom(
