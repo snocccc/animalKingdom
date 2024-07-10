@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:untitled/pages/selectedanimal.dart';
 import 'package:untitled/services/animal.dart';
-import 'package:untitled/services/menuCard.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_spinkit/flutter_spinkit.dart';
 
@@ -19,7 +18,7 @@ class _MenuState extends State<Menu> {
 
   // 10.0.2.2:8080
   Future<List<dynamic>> fetchData() async {
-    final response = await http.get(Uri.parse('http://10.0.2.2:8080/Animals')
+    final response = await http.get(Uri.parse('http://10.0.2.2:8080/api/v1/Animal/all')
       //Product newProduct = Products.fromJson(date);
       //   return newProduct;
       //if you want to call 1 product

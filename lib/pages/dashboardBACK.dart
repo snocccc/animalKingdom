@@ -8,7 +8,7 @@ class Dashboard extends StatefulWidget {
 }
 
 class _DashboardState extends State<Dashboard> {
-  int _selectedIndex = 0; // Start with the first item selected
+  int _selectedIndex = 0;
 
   static const List<Widget> _widgetOptions = <Widget>[
     Text('Menu Page'), // Replace with actual pages or widgets
@@ -29,6 +29,7 @@ class _DashboardState extends State<Dashboard> {
         Navigator.pushNamed(context, '/signup'); // Navigate to Sign Up page or perform action
         break;
       case 3:
+      // Navigate to Log In page or perform action
         Navigator.pushNamed(context, '/login'); // Navigate to login page
         break;
     }
@@ -41,24 +42,14 @@ class _DashboardState extends State<Dashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.deepPurple[300],
+      backgroundColor: Colors.purple,
       appBar: AppBar(
         title: Text('Dashboard'),
-        backgroundColor: Colors.deepPurple,
+        backgroundColor: Colors.purple,
         centerTitle: true,
       ),
-      body: Container(
-      decoration: BoxDecoration(
-    image: DecorationImage(
-    image: AssetImage('assets/DashBoardBG.png'),
-    fit: BoxFit.cover,
-      colorFilter: ColorFilter.mode(
-        Colors.black.withOpacity(0.1), // Adjust opacity here (0.0 - 1.0)
-        BlendMode.darken, // Adjust blend mode as needed
-      ),
-      // Adjust as needed
-    ),
-    ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
       ),
       bottomNavigationBar: BottomNavigationBar(
         items: <BottomNavigationBarItem>[
